@@ -8,6 +8,14 @@ This repo ships three compatibility layers:
 
 The Codex plugin manifest lives at `.codex-plugin/plugin.json` and points to `.mcp.json`.
 
+Automation exists for both internal Gitea and future public GitHub mirrors:
+
+- `.gitea/workflows/ci.yml`
+- `.gitea/workflows/release.yml`
+- `.github/workflows/ci.yml`
+- `.github/workflows/release.yml`
+- `.github/dependabot.yml`
+
 ## Versioning
 
 Use semver:
@@ -38,9 +46,15 @@ Keep `package.json`, `.codex-plugin/plugin.json`, and MCP `serverInfo.version` a
    node test/mcp-smoke.mjs
    ```
 
-4. Validate the Codex plugin manifest with the local plugin validator when available.
+4. Validate the plugin manifest:
 
-5. Run one end-to-end registration against a disposable PocketID agent bootstrap token.
+   ```bash
+   npm run validate:plugin
+   ```
+
+5. Validate with the Codex plugin validator when available.
+
+6. Run one end-to-end registration against a disposable PocketID agent bootstrap token.
 
 ## Release
 
@@ -64,7 +78,11 @@ Keep `package.json`, `.codex-plugin/plugin.json`, and MCP `serverInfo.version` a
    git push origin vX.Y.Z
    ```
 
-5. The Gitea release workflow publishes a source archive and release notes.
+5. The Gitea and GitHub release workflows publish source archives and release notes from matching tags.
+
+For public GitHub publication, push `main` and the version tag to the GitHub remote. GitHub Actions will run the same test/validation gate on pull requests, pushes, and tags.
+
+Before the first public GitHub release, update `.codex-plugin/plugin.json` if the public repository URL differs from the internal Gitea URL.
 
 ## Agent Host Notes
 

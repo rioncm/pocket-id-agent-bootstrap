@@ -8,7 +8,8 @@
     "pocketid-agent-bootstrap-mcp": "./bin/pocketid-agent-bootstrap-mcp.mjs"
   },
   "scripts": {
-    "test": "node --test"
+    "test": "node --test",
+    "validate:plugin": "node scripts/validate-plugin.mjs"
   },
   "engines": {
     "node": ">=20"
