@@ -1,0 +1,23 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm test
+      - run: git archive --format=tar.gz --output=pocketid-agent-bootstrap-${GITHUB_REF_NAME}.tar.gz HEAD
+      - uses: akkuman/gitea-release-action@v1
+        with:
+          files: pocketid-agent-bootstrap-${{ github.ref_name }}.tar.gz
+          body: |
+            Automated release for ${{ github.ref_name }}.

@@ -1,0 +1,30 @@
+{
+  "name": "pocketid-agent-bootstrap",
+  "version": "0.2.0",
+  "description": "Bootstrap PocketID runtime credentials for agent frameworks.",
+  "author": {
+    "name": "Van Ness Blvd",
+    "email": "vex@vanness.me",
+    "url": "https://git.vanness.me/vanness"
+  },
+  "homepage": "https://git.vanness.me/vanness/pocketid-agent-bootstrap",
+  "repository": "https://git.vanness.me/vanness/pocketid-agent-bootstrap",
+  "license": "UNLICENSED",
+  "keywords": ["pocketid", "agent", "oidc", "runtime-credentials", "mcp"],
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "PocketID Agent Bootstrap",
+    "shortDescription": "Register PocketID runtime credentials from agent bootstrap tokens.",
+    "longDescription": "Provides CLI and MCP tooling for agents to turn PocketID agent bootstrap tokens into local Ed25519 runtime credentials without opening browser login links.",
+    "developerName": "Van Ness Blvd",
+    "category": "Developer Tools",
+    "capabilities": ["Authentication", "MCP", "Local credentials"],
+    "websiteURL": "https://git.vanness.me/vanness/pocketid-agent-bootstrap",
+    "defaultPrompt": [
+      "Bootstrap my PocketID runtime credential.",
+      "Verify my PocketID runtime login.",
+      "Explain this PocketID agent token."
+    ],
+    "brandColor": "#0F766E"
+  }
+}

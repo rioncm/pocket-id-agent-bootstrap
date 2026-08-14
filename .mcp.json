@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "pocketid-agent-bootstrap": {
+      "command": "node",
+      "args": ["./bin/pocketid-agent-bootstrap-mcp.mjs"]
+    }
+  }
+}

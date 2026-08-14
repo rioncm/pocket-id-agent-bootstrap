@@ -4,7 +4,12 @@ Companion helper for agent frameworks that receive a PocketID agent bootstrap to
 
 PocketID should provide identity authority. Agent runtimes should know how to turn a one-time bootstrap token into a locally held runtime credential without opening browser login links.
 
-This project provides the first-pass executable helper for that flow.
+This project provides a packageable integration for that flow:
+
+- reusable Node library
+- shell CLI
+- stdio MCP server
+- Codex plugin manifest
 
 ## What It Does
 
@@ -19,10 +24,11 @@ This project provides the first-pass executable helper for that flow.
 
 It never sends the private key to PocketID.
 
-## Usage
+## CLI Usage
 
 ```bash
 pocketid-agent-bootstrap \
+  register \
   --issuer https://id.vanness.me \
   --username vex \
   --token '<agent-bootstrap-token>' \
@@ -39,6 +45,7 @@ Override paths when a framework has its own protected credential store:
 
 ```bash
 pocketid-agent-bootstrap \
+  register \
   --issuer https://id.vanness.me \
   --username vex \
   --token '<agent-bootstrap-token>' \
@@ -46,6 +53,50 @@ pocketid-agent-bootstrap \
   --key-path ~/.openclaw/credentials/pocketid-vex-runtime/ed25519-private.pem \
   --metadata-path ~/.openclaw/credentials/pocketid-vex-runtime/metadata.json
 ```
+
+Verify an existing credential:
+
+```bash
+pocketid-agent-bootstrap \
+  verify-login \
+  --issuer https://id.vanness.me \
+  --username vex \
+  --credential-id '<credential-id>' \
+  --key-path ~/.openclaw/credentials/pocketid-vex-runtime/ed25519-private.pem
+```
+
+## MCP Usage
+
+Run the stdio MCP server:
+
+```bash
+pocketid-agent-bootstrap-mcp
+```
+
+Or configure an MCP-capable agent host:
+
+```json
+{
+  "mcpServers": {
+    "pocketid-agent-bootstrap": {
+      "command": "node",
+      "args": ["/path/to/pocketid-agent-bootstrap/bin/pocketid-agent-bootstrap-mcp.mjs"]
+    }
+  }
+}
+```
+
+Tools:
+
+- `register_credential`
+- `verify_login`
+- `explain_token`
+
+## Codex Plugin
+
+The Codex plugin manifest is at `.codex-plugin/plugin.json`.
+
+It exposes the MCP server through `.mcp.json`. The OpenClaw skill content is managed through Skill Workshop rather than committed directly here.
 
 ## Agent Skill Contract
 
@@ -69,3 +120,5 @@ npm test
 ```
 
 No runtime npm dependencies are required.
+
+See [docs/release-process.md](docs/release-process.md) for packaging and release steps.
